@@ -35,6 +35,7 @@ fn window_conf() -> Conf {
 async fn main() {
     let mut current_screen = "menu".to_string();
     let mut last_switch = get_time() - 0.02;
+    let mut score = 0;
 
     loop {
         if get_time() - last_switch > 0.01 {
@@ -49,6 +50,7 @@ async fn main() {
             last_switch = get_time();
         }
         next_frame().await;
+
     }
 }
 

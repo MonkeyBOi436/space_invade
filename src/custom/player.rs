@@ -36,22 +36,32 @@ pub fn draw(&self) {
     pub fn keypress(&mut self) {
         self.move_dir = vec2(0.0, 0.0);
         self.old_pos = vec2 (self.image.get_x(), self.image.get_y());
-    if is_key_down(KeyCode::Right) {
+    if is_key_down(KeyCode::D) {
         self.move_dir.x += self.speed;
     }
-    if is_key_down(KeyCode::Left) {
+    if is_key_down(KeyCode::A) {
         self.move_dir.x -= self.speed;
     }
-    if is_key_down(KeyCode::Down) {
+    if is_key_down(KeyCode::S) {
         self.move_dir.y += self.speed;
     }
-    if is_key_down(KeyCode::Up) {
+    if is_key_down(KeyCode::W) {
         self.move_dir.y -=  self.speed;
     }
     if self.move_dir.length() > 0.0 {
         self.move_dir = self.move_dir.normalize() * 2.0;
     }
     }
+    
+    pub fn get_x(&self) -> f32 {
+      self.image.get_x()
+    }
+
+        pub fn get_y(&self) -> f32 {
+        self.image.get_y()
+    }
+
+
 pub fn move_player(&mut self) {
     self.image.set_x(self.image.get_x() + self.move_dir.x);
     self.image.set_y(self.image.get_y() + self.move_dir.y );
