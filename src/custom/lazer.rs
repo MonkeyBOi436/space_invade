@@ -59,7 +59,7 @@ pub fn set_y(&mut self, y: f32) {
 
 pub fn lazer_shoot(&mut self , y: f32 , x: f32) {
 if self.image.get_y() < 0.0 {
-    if is_mouse_button_down(Left) {
+    if is_mouse_button_down(Left) || is_key_down(KeyCode::Space){
      self.image.set_x(y);
      self.image.set_y(x);
      self.image.draw();

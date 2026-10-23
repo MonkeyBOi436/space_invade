@@ -3,7 +3,7 @@ use macroquad::prelude::*;
 
 pub struct Enemy {
     image: StillImage,
-    pub speed: f32,
+    speed: f32,
     pub move_dir: Vec2,
     pub old_pos: Vec2,
 
@@ -32,11 +32,22 @@ pub fn draw(&self) {
         self.speed
     }
 
-pub fn move_enemy(&mut self) {
-    self.image.set_x(self.image.get_x() + self.move_dir.x);
-    self.image.set_y(self.image.get_y() + self.move_dir.y);
+pub fn move_enemy_y(&mut self){
+self.image.set_y(self.image.get_y() + 20.0);
 
 }
+
+pub fn move_enemy_x_right(&mut self) {
+    self.image.set_x(self.image.get_x() + 2.0);
+
+}
+
+
+pub fn move_enemy_x_left(&mut self) {
+    self.image.set_x(self.image.get_x() - 2.0);
+
+}
+
 pub fn move_back_x(&mut self){
     self.image.set_x(self.old_pos.x);
     
