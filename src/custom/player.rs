@@ -49,7 +49,7 @@ pub fn draw(&self) {
         self.move_dir.y -=  self.speed;
     }
     if self.move_dir.length() > 0.0 {
-        self.move_dir = self.move_dir.normalize() * 2.0;
+        self.move_dir = self.move_dir.normalize() * 3.0;
     }
     }
     

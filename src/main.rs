@@ -7,7 +7,6 @@ Program Details: Space Invaders clone
 mod ui;
 mod utils;
 mod menu;
-mod tutorial;
 mod game;
 mod lose;
 mod custom;
@@ -34,23 +33,26 @@ fn window_conf() -> Conf {
     
 async fn main() {
     let mut current_screen = "menu".to_string();
-    let mut last_switch = get_time() - 0.02;
+    let last_switch = get_time() - 0.02;
     let mut score = 0;
+    let mut high_score = 0;
+
+
 
     loop {
         if get_time() - last_switch > 0.01 {
-            current_screen = match current_screen.as_str() {
-                "menu" => menu::run().await,
-                "tutorial" => tutorial::run().await,
-                "game" => game::run().await,
-                "lose" => lose::run().await,
+          (current_screen, score, high_score) = match current_screen.as_str() {
+                "menu" => menu::run(score, high_score).await,
+                "game" => game::run(score, high_score).await,
+                "lose" => lose::run(score, high_score).await,
                 "end" => break,
                 _ => break,
             };
-            last_switch = get_time();
         }
         next_frame().await;
 
     }
 }
+
+
 

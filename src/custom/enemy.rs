@@ -1,5 +1,6 @@
 use crate::ui::still_image::StillImage;
 use macroquad::prelude::*;
+use crate::utils::collision::check_collision;
 
 pub struct Enemy {
     image: StillImage,
@@ -58,5 +59,12 @@ pub fn move_back_y(&mut self){
     
 }
 
+pub fn clear(&mut self){
+    self.image.clear();
+    
+}
 
+
+
+    // Check if collision should be performed (not empty)
 }

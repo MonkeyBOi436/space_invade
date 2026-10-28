@@ -6,9 +6,12 @@ use crate::ui::grid::draw_grid;
 use crate::ui::text_button::TextButton;
 use crate::ui::still_image::StillImage;
 use crate::ui::label::Label;
+use crate::utils::collision::check_collision;
 
-pub async fn run() -> String {
-let mut player = Player::new(800.0, 1200.0, 50.0, 50.0, "assets/player.png" ,3.0).await;
+pub async fn run(mut score: i32, high_score: i32) -> (String, i32, i32) {
+
+
+let mut player = Player::new(800.0, 1200.0, 50.0, 50.0, "assets/player.png" ,8.0).await;
 
 let mut lbl_score = Label::new("Score: 0", 50.0, 100.0, 30);
 
@@ -33,10 +36,11 @@ let btn_exit_tutorial = TextButton::new(
         30
     );
 
-let mut eneny_right_or_left = true;
-    let mut lazer_player = Lazer::new(0.0, -19.0, 50.0, 50.0, 7.0).await;
 
-    let mut enemy_1 = Enemy::new(0.0, 100.0, 50.0, 50.0, "assets/enemy_bl.png" ,3.0).await;
+let mut eneny_right_or_left = true;
+    let mut lazer_player = Lazer::new(0.0, -19.0, 50.0, 50.0, 9.0).await;
+
+    let mut enemy_1 = Enemy::new(0.0, 100.0, 70.0, 70.0, "assets/enemy_bl.png" ,3.0).await;
 
     let enemies: Vec<Enemy> = vec![
         Enemy::new(0.0, 0.0, 50.0, 50.0, "assets/enemy_bl.png" ,3.0).await,
@@ -70,8 +74,8 @@ lazer_player.lazer_shoot(lazer_x, lazer_y);
 
 lazer_player.projectile_move();
 
-        if btn_exit_tutorial.click() {
-            return "menu".to_string();
+        if is_key_pressed(KeyCode::Escape) {
+            return ("menu".to_string() , score , high_score);
         }
 
         if player.get_x() > 2500.0 || player.get_x() < 0.0{
@@ -108,6 +112,15 @@ if enemy_1.get_image().get_x() <= 0.0 {
     eneny_right_or_left = true;
     enemy_1.move_enemy_y();
 }
+
+  if check_collision(lazer_player.get_image(), enemy_1.get_image(), 1) {
+    enemy_1.clear();
+    lazer_player.lazer_hit();
+    score = score + 100;
+    lbl_score.set_text(format!("Score: {}", score));
+
+    }
+
 draw_grid(50.0, BLACK);
         next_frame().await;
     }
