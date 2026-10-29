@@ -29,9 +29,8 @@ pub fn bunk_hit(&self) {
 self.health - 1;
 }
 
-pub fn bunk_change(&self) {
-
-
+pub fn bunk_get_health(&self) {
+self.health;
 }
 
 }

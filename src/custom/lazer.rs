@@ -67,4 +67,17 @@ if self.image.get_y() < 0.0 {
 }
 
 
+pub fn lazer_shoot_ene(&mut self , y: f32 , x: f32) {
+if self.image.get_y() > 1500.0 {
+     self.image.set_x(y);
+     self.image.set_y(x);
+     self.image.draw();
+}
+}
+
+pub fn projectile_move_ene(&mut self) {
+    self.image.set_y(self.image.get_y() + self.speed);
+
+}
+
 }
