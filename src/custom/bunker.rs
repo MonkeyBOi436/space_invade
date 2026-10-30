@@ -25,6 +25,7 @@ pub fn draw(&self) {
     self.image.draw();
 }
 
+
 pub fn bunk_hit(&self) {
 self.health - 1;
 }

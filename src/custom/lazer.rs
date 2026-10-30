@@ -2,7 +2,6 @@ use crate::ui::still_image::StillImage;
 use macroquad::input::KeyCode;
 use macroquad::input::MouseButton::Left;
 use macroquad::prelude::*;
-use crate::utils::collision::check_collision;
 
 pub struct Lazer {
     image: StillImage,
@@ -36,24 +35,24 @@ pub fn projectile_move(&mut self) {
 }
 
 
-    pub fn get_speed(&self) -> f32 {
-        self.speed
-    }
+   // pub fn get_speed(&self) -> f32 {self.speed}
 
-pub fn get_y(&self) -> f32 {
-    self.image.get_y()
-}
+//pub fn get_y(&self) -> f32 {
+  //  self.image.get_y()}
 
-pub fn set_x(&mut self, x: f32 ) {
-    self.image.set_x(x);}
+//pub fn set_x(&mut self, x: f32 ) {
+    //self.image.set_x(x);}
 
-pub fn set_y(&mut self, y: f32) {
-    self.image.set_y(y);}
+//pub fn set_y(&mut self, y: f32) {self.image.set_y(y);}
 
 
 
     pub fn lazer_hit(&mut self) {
     self.image.set_y(-100.0);
+    }
+
+        pub fn lazer_hit_enemy(&mut self) {
+    self.image.set_y(3000.0);
     }
 
 pub fn lazer_shoot(&mut self , y: f32 , x: f32) {

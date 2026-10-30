@@ -12,6 +12,8 @@ pub async fn run(mut score: i32, high_score: i32) -> (String, i32, i32) {
 
 let mut player = Player::new(800.0, 1200.0, 50.0, 50.0, "assets/player.png" ,8.0).await;
 
+let mut player_health = 3;
+
 let mut lbl_score = Label::new("Score: 0", 50.0, 100.0, 30);
 
 let background_image = StillImage::new(
@@ -33,15 +35,24 @@ let mut lazer_ene_2 = Lazer::new(0.0, -109.0, 50.0, 50.0, 9.0).await;
 
     let mut enemies: Vec<Enemy> = vec![
         Enemy::new(0.0, 0.0, 70.0, 70.0, "assets/enemy_bl.png" ,3.0).await,
-        Enemy::new(60.0, 0.0, 70.0, 70.0, "assets/enemy_gr.png" ,3.0).await,
-        Enemy::new(120.0, 0.0, 70.0, 70.0, "assets/enemy_bl.png" ,3.0).await,
-        Enemy::new(180.0, 0.0, 70.0, 70.0, "assets/enemy_gr.png" ,3.0).await,
-        Enemy::new(240.0, 0.0, 70.0, 70.0, "assets/enemy_bl.png" ,3.0).await,
+        Enemy::new(100.0, 0.0, 70.0, 70.0, "assets/enemy_gr.png" ,3.0).await,
+        Enemy::new(200.0, 0.0, 70.0, 70.0, "assets/enemy_bl.png" ,3.0).await,
         Enemy::new(300.0, 0.0, 70.0, 70.0, "assets/enemy_gr.png" ,3.0).await,
-        Enemy::new(360.0, 0.0, 70.0, 70.0, "assets/enemy_bl.png" ,3.0).await,
-        Enemy::new(420.0, 0.0, 70.0, 70.0, "assets/enemy_gr.png" ,3.0).await,
-        Enemy::new(480.0, 0.0, 70.0, 70.0, "assets/enemy_bl.png" ,3.0).await,
-        Enemy::new(560.0, 0.0, 70.0, 70.0, "assets/enemy_gr.png" ,3.0).await
+        Enemy::new(400.0, 0.0, 70.0, 70.0, "assets/enemy_bl.png" ,3.0).await,
+        Enemy::new(500.0, 0.0, 70.0, 70.0, "assets/enemy_gr.png" ,3.0).await,
+        Enemy::new(600.0, 0.0, 70.0, 70.0, "assets/enemy_bl.png" ,3.0).await,
+        Enemy::new(700.0, 0.0, 70.0, 70.0, "assets/enemy_gr.png" ,3.0).await,
+        Enemy::new(800.0, 0.0, 70.0, 70.0, "assets/enemy_bl.png" ,3.0).await,
+        Enemy::new(900.0, 0.0, 70.0, 70.0, "assets/enemy_gr.png" ,3.0).await,
+        Enemy::new(0.0, 100.0, 70.0, 70.0, "assets/enemy_bl.png" ,3.0).await,
+        Enemy::new(110.0, 100.0, 70.0, 70.0, "assets/enemy_gr.png" ,3.0).await,
+        Enemy::new(220.0, 100.0, 70.0, 70.0, "assets/enemy_bl.png" ,3.0).await,
+        Enemy::new(330.0, 100.0, 70.0, 70.0, "assets/enemy_gr.png" ,3.0).await,
+        Enemy::new(440.0, 100.0, 70.0, 70.0, "assets/enemy_bl.png" ,3.0).await,
+        Enemy::new(550.0, 100.0, 70.0, 70.0, "assets/enemy_gr.png" ,3.0).await,
+        Enemy::new(660.0, 100.0, 70.0, 70.0, "assets/enemy_bl.png" ,3.0).await,
+        Enemy::new(770.0, 100.0, 70.0, 70.0, "assets/enemy_gr.png" ,3.0).await,
+        Enemy::new(880.0, 100.0, 70.0, 70.0, "assets/enemy_bl.png" ,3.0).await,
     ];
 
     loop {
@@ -128,6 +139,13 @@ if check_collision(lazer_player.get_image(), enemy.get_image(), 1) {
     score = score + 100;
     lbl_score.set_text(format!("Score: {}", score));
     }
+    if check_collision(player.get_image(), lazer_ene_1.get_image(), 1) {
+player_health = player_health -1;
+lazer_ene_1.lazer_hit_enemy();
+if player_health == 0{
+return ("lose".to_string() , score , high_score);
+}
+}
 }
 
 

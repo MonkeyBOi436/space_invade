@@ -29,9 +29,9 @@ pub fn draw(&self) {
     self.image.draw();
 }
 
-    pub fn get_speed(&self) -> f32 {
-        self.speed
-    }
+   // pub fn get_speed(&self) -> f32 {
+     //   self.speed
+    //}
 
     pub fn keypress(&mut self) {
         self.move_dir = vec2(0.0, 0.0);

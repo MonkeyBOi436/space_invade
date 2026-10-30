@@ -1,12 +1,10 @@
 use crate::ui::still_image::StillImage;
 use macroquad::prelude::*;
-use crate::utils::collision::check_collision;
 
 pub struct Enemy {
     image: StillImage,
     speed: f32,
-    pub move_dir: Vec2,
-    pub old_pos: Vec2,
+    old_pos: Vec2,
 
 }
 
@@ -17,7 +15,6 @@ impl Enemy {
         Enemy{
         image,
         speed,
-        move_dir: vec2(0.0, 0.0),
         old_pos: vec2(0.0, 0.0),
     }
     }
@@ -29,9 +26,7 @@ pub fn draw(&self) {
     self.image.draw();
 }
 
-    pub fn get_speed(&self) -> f32 {
-        self.speed
-    }
+    pub fn get_speed(&self) -> f32 {self.speed }
 
 pub fn move_enemy_y(&mut self){
 self.image.set_y(self.image.get_y() + 20.0);
@@ -49,14 +44,8 @@ pub fn move_enemy_x_left(&mut self) {
 
 }
 
-pub fn move_back_x(&mut self){
-    self.image.set_x(self.old_pos.x);
-    
-}
-
 pub fn move_back_y(&mut self){
-    self.image.set_y(self.old_pos.y);
-    
+    self.image.set_y(self.old_pos.y);    
 }
 
 pub fn clear(&mut self){
