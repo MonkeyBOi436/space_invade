@@ -37,7 +37,7 @@ let mut enemy_down = false;
     let mut lazer_player = Lazer::new(0.0, -109.0, 50.0, 50.0, 9.0).await;
 
 let mut lazer_ene_1 = Enemy::new(0.0, 0.0, 70.0, 70.0, "assets/lazer_beam_ene.png" ,3.0).await;
-let mut lazer_ene_1 = Enemy::new(0.0, 0.0, 70.0, 70.0, "assets/lazer_beam_ene.png" ,3.0).await;
+let mut lazer_ene_2 = Enemy::new(0.0, 0.0, 70.0, 70.0, "assets/lazer_beam_ene.png" ,3.0).await;
 
     let mut enemies: Vec<Enemy> = vec![
         Enemy::new(0.0, 0.0, 70.0, 70.0, "assets/enemy_bl.png" ,3.0).await,
@@ -76,6 +76,7 @@ player.keypress();
 lazer_player.lazer_shoot(lazer_x, lazer_y);
 
 lazer_ene_1.projectile_move_ene();
+lazer_ene_2.projectile_move_ene();
 
 lazer_player.projectile_move();
 
@@ -97,14 +98,6 @@ lazer_player.projectile_move();
         lazer_player.draw();
         lazer_ene_1.draw();
         lbl_score.draw();
-let choose_enemy_pro = enemies.choose();
-
-
-for enemy in &mut enemies.iter_mut() {
-let lazer_x = enemy.get_image().get_x();
-let lazer_y = enemy.get_image().get_y();
-lazer_ene_1.lazer_shoot_ene(lazer_x, lazer_y);
-}
 
 for enemy in &mut enemies {
 enemy.draw();
@@ -152,8 +145,35 @@ if player_health == 0{
 return ("lose".to_string() , score , high_score);
 }
 }
+if check_collision(player.get_image(), lazer_ene_2.get_image(), 1) {
+player_health = player_health -1;
+lazer_ene_2.lazer_hit_enemy();
+if player_health == 0{
+return ("lose".to_string() , score , high_score);
+}
+}
 }
 
+let mut choose_enemy_pro = enemies.choose();
+
+
+for enemy in &mut choose_enemy_pro.iter_mut() {
+let lazer_x = enemy.get_image().get_x();
+let lazer_y = enemy.get_image().get_y();
+lazer_ene_1.lazer_shoot_ene(lazer_x, lazer_y);
+}
+
+
+let mut choose_enemy_pro = enemies.choose();
+
+
+for enemy in &mut choose_enemy_pro.iter_mut() {
+let lazer_x = enemy.get_image().get_x();
+let lazer_y = enemy.get_image().get_y();
+lazer_ene_2.lazer_shoot_ene(lazer_x, lazer_y);
+}
+
+lazer_ene_2.draw();
 
 draw_grid(50.0, BLACK);
         next_frame().await;
