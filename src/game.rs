@@ -1,4 +1,5 @@
 use macroquad::prelude::*;
+use macroquad::rand::ChooseRandom;
 use crate::custom::enemy::Enemy;
 use crate::custom::player::Player;
 use crate::custom::lazer::Lazer;
@@ -6,9 +7,14 @@ use crate::ui::grid::draw_grid;
 use crate::ui::still_image::StillImage;
 use crate::ui::label::Label;
 use crate::utils::collision::check_collision;
+use miniquad::date;
+
+
+
 
 pub async fn run(mut score: i32, high_score: i32) -> (String, i32, i32) {
 
+    rand::srand(date::now() as u64);
 
 let mut player = Player::new(800.0, 1200.0, 50.0, 50.0, "assets/player.png" ,8.0).await;
 
@@ -30,8 +36,8 @@ let mut eneny_right_or_left = true;
 let mut enemy_down = false;
     let mut lazer_player = Lazer::new(0.0, -109.0, 50.0, 50.0, 9.0).await;
 
-let mut lazer_ene_1 = Lazer::new(0.0, -109.0, 50.0, 50.0, 4.0).await;
-let mut lazer_ene_2 = Lazer::new(0.0, -109.0, 50.0, 50.0, 9.0).await;
+let mut lazer_ene_1 = Enemy::new(0.0, 0.0, 70.0, 70.0, "assets/lazer_beam_ene.png" ,3.0).await;
+let mut lazer_ene_1 = Enemy::new(0.0, 0.0, 70.0, 70.0, "assets/lazer_beam_ene.png" ,3.0).await;
 
     let mut enemies: Vec<Enemy> = vec![
         Enemy::new(0.0, 0.0, 70.0, 70.0, "assets/enemy_bl.png" ,3.0).await,
@@ -91,14 +97,14 @@ lazer_player.projectile_move();
         lazer_player.draw();
         lazer_ene_1.draw();
         lbl_score.draw();
+let choose_enemy_pro = enemies.choose();
+
 
 for enemy in &mut enemies.iter_mut() {
-lazer_ene_1.get_image();
 let lazer_x = enemy.get_image().get_x();
 let lazer_y = enemy.get_image().get_y();
 lazer_ene_1.lazer_shoot_ene(lazer_x, lazer_y);
 }
-
 
 for enemy in &mut enemies {
 enemy.draw();

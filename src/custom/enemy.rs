@@ -11,7 +11,6 @@ pub struct Enemy {
 impl Enemy {
     pub async fn new (x: f32, y: f32, width: f32, height: f32, image_name: &str, speed: f32) -> Enemy {
     let image = StillImage::new(image_name, width, height, x, y, true, 1.0,).await;
-    
         Enemy{
         image,
         speed,
@@ -50,9 +49,24 @@ pub fn move_back_y(&mut self){
 
 pub fn clear(&mut self){
     self.image.clear();
-    
 }
 
+        pub fn lazer_hit_enemy(&mut self) {
+    self.image.set_y(3000.0);
+    }
+
+    pub fn lazer_shoot_ene(&mut self , y: f32 , x: f32) {
+if self.image.get_y() > 1500.0 {
+     self.image.set_x(y);
+     self.image.set_y(x);
+     self.image.draw();
+}
+}
+
+pub fn projectile_move_ene(&mut self) {
+    self.image.set_y(self.image.get_y() + self.speed);
+
+}
 
 
     // Check if collision should be performed (not empty)

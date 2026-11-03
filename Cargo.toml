@@ -7,7 +7,6 @@ edition = "2024"
 macroquad = "0.4.16"
 rayon = { version = "1.7", optional = true }
 
-
 [features]
 scale = []
 default = ["native"]

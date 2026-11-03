@@ -29,12 +29,6 @@ pub fn draw(&self) {
     
 }
 
-pub fn projectile_move(&mut self) {
-    self.image.set_y(self.image.get_y() - self.speed);
-
-}
-
-
    // pub fn get_speed(&self) -> f32 {self.speed}
 
 //pub fn get_y(&self) -> f32 {
@@ -51,10 +45,6 @@ pub fn projectile_move(&mut self) {
     self.image.set_y(-100.0);
     }
 
-        pub fn lazer_hit_enemy(&mut self) {
-    self.image.set_y(3000.0);
-    }
-
 pub fn lazer_shoot(&mut self , y: f32 , x: f32) {
 if self.image.get_y() < 0.0 {
     if is_mouse_button_down(Left) || is_key_down(KeyCode::Space){
@@ -65,17 +55,8 @@ if self.image.get_y() < 0.0 {
 }
 }
 
-
-pub fn lazer_shoot_ene(&mut self , y: f32 , x: f32) {
-if self.image.get_y() > 1500.0 {
-     self.image.set_x(y);
-     self.image.set_y(x);
-     self.image.draw();
-}
-}
-
-pub fn projectile_move_ene(&mut self) {
-    self.image.set_y(self.image.get_y() + self.speed);
+pub fn projectile_move(&mut self) {
+    self.image.set_y(self.image.get_y() - self.speed);
 
 }
 
