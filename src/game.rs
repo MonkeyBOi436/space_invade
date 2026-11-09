@@ -1,6 +1,5 @@
 use macroquad::prelude::*;
-use macroquad::rand::ChooseRandom;
-use crate::custom::enemy::Enemy;
+use crate::custom::enemy::{self, Enemy};
 use crate::custom::player::Player;
 use crate::custom::lazer::Lazer;
 use crate::ui::grid::draw_grid;
@@ -36,8 +35,13 @@ let mut eneny_right_or_left = true;
 let mut enemy_down = false;
     let mut lazer_player = Lazer::new(0.0, -109.0, 50.0, 50.0, 9.0).await;
 
-let mut lazer_ene_1 = Enemy::new(0.0, 0.0, 70.0, 70.0, "assets/lazer_beam_ene.png" ,3.0).await;
-let mut lazer_ene_2 = Enemy::new(0.0, 0.0, 70.0, 70.0, "assets/lazer_beam_ene.png" ,3.0).await;
+let mut lazer_ene_1 = Enemy::new(0.0, 3000.0, 70.0, 70.0, "assets/lazer_beam_ene.png" ,3.0).await;
+let mut lazer_ene_2 = Enemy::new(0.0, 3000.0, 70.0, 70.0, "assets/lazer_beam_ene.png" ,3.0).await;
+
+    let mut enemy_lazer: Vec<Enemy> = vec![
+        
+    ];
+
 
     let mut enemies: Vec<Enemy> = vec![
         Enemy::new(0.0, 0.0, 70.0, 70.0, "assets/enemy_bl.png" ,3.0).await,
@@ -60,6 +64,8 @@ let mut lazer_ene_2 = Enemy::new(0.0, 0.0, 70.0, 70.0, "assets/lazer_beam_ene.pn
         Enemy::new(770.0, 100.0, 70.0, 70.0, "assets/enemy_gr.png" ,3.0).await,
         Enemy::new(880.0, 100.0, 70.0, 70.0, "assets/enemy_bl.png" ,3.0).await,
     ];
+
+let mut test = false;
 
     loop {
 
@@ -91,7 +97,6 @@ lazer_player.projectile_move();
         if player.get_y() > 1330.0 || player.get_y() < 1100.0{
             player.move_back_y()
         }
-
 
 
         player.draw();
@@ -137,40 +142,83 @@ if check_collision(lazer_player.get_image(), enemy.get_image(), 1) {
     lazer_player.lazer_hit();
     score = score + 100;
     lbl_score.set_text(format!("Score: {}", score));
-    }
-    if check_collision(player.get_image(), lazer_ene_1.get_image(), 1) {
+    }}
+//     if check_collision(player.get_image(), lazer_ene_1.get_image(), 1) {
+// player_health = player_health -1;
+// lazer_ene_1.lazer_hit_enemy();
+// if player_health == 0{
+// return ("lose".to_string() , score , high_score);
+// }
+// }
+// if check_collision(player.get_image(), lazer_ene_2.get_image(), 1) {
+// player_health = player_health -1;
+// lazer_ene_2.lazer_hit_enemy();
+// if player_health == 0{
+// return ("lose".to_string() , score , high_score);
+// }
+// }
+// }
+
+
+// for enemy in &mut enemies.iter_mut() {
+// let lazer_x = enemy.get_image().get_x();
+// let lazer_y = enemy.get_image().get_y();
+// lazer_ene_1.lazer_shoot_ene(lazer_x, lazer_y);
+// }
+for i in 0..enemies.len(){
+//enemy_lazer.push(Enemy::new(enemies[i].get_image().get_x(), enemies[i].get_image().get_y(), 70.0, 70.0, "assets/lazer_beam_ene.png" ,3.0).await);
+}
+
+for lazer in &mut enemy_lazer{
+    lazer.draw();
+    lazer.projectile_move_ene();
+}
+
+for i in 0..enemies.len(){
+if test == false{
+let rng = rand::gen_range(0, enemies.len());
+enemy_lazer.push(Enemy::new(enemies[rng].get_image().get_x(), enemies[rng].get_image().get_y(), 70.0, 70.0, "assets/lazer_beam_ene.png" ,3.0).await);
+enemy_lazer.last_mut().unwrap().lazer_shoot_ene(enemies[rng].get_image().get_x(), enemies[rng].get_image().get_y());
+
+if enemy_lazer.len() > 5{
+    test = true;
+    print!("test");
+}
+}
+
+ if enemy_lazer[i].get_image().get_y() < 900.0{
+  enemy_lazer.remove(i);
+}
+if enemy_lazer.len() < 5{
+    test = false;
+    print!("tested");
+}
+}
+
+for i in 0..enemy_lazer.len(){
+if check_collision(player.get_image(), enemy_lazer[i].get_image(), 1) {
 player_health = player_health -1;
-lazer_ene_1.lazer_hit_enemy();
+enemy_lazer[i].lazer_hit_enemy();
 if player_health == 0{
 return ("lose".to_string() , score , high_score);
 }
 }
-if check_collision(player.get_image(), lazer_ene_2.get_image(), 1) {
-player_health = player_health -1;
-lazer_ene_2.lazer_hit_enemy();
-if player_health == 0{
-return ("lose".to_string() , score , high_score);
-}
-}
 }
 
-let mut choose_enemy_pro = enemies.choose();
+for enemy in enemies.iter_mut() {
 
+// for enemy in &mut enemies.iter_mut() {
+// let lazer_x = enemy.get_image().get_x();
+// let lazer_y = enemy.get_image().get_y();
+// lazer_ene_1.lazer_shoot_ene(lazer_x, lazer_y);
+// }
 
-for enemy in &mut choose_enemy_pro.iter_mut() {
-let lazer_x = enemy.get_image().get_x();
-let lazer_y = enemy.get_image().get_y();
-lazer_ene_1.lazer_shoot_ene(lazer_x, lazer_y);
-}
+// for enemy in &mut choose_enemy_pro.iter_mut() {
+// let lazer_x = enemy.get_image().get_x();
+// let lazer_y = enemy.get_image().get_y();
+// lazer_ene_2.lazer_shoot_ene(lazer_x, lazer_y);
+// }
 
-
-let mut choose_enemy_pro = enemies.choose();
-
-
-for enemy in &mut choose_enemy_pro.iter_mut() {
-let lazer_x = enemy.get_image().get_x();
-let lazer_y = enemy.get_image().get_y();
-lazer_ene_2.lazer_shoot_ene(lazer_x, lazer_y);
 }
 
 lazer_ene_2.draw();

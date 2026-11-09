@@ -43,6 +43,11 @@ pub fn move_enemy_x_left(&mut self) {
 
 }
 
+pub fn set_position(&mut self, x: f32, y: f32) {
+    self.image.set_x(x);
+    self.image.set_y(y);
+}
+
 pub fn move_back_y(&mut self){
     self.image.set_y(self.old_pos.y);    
 }
