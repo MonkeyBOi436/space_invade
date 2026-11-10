@@ -5,16 +5,18 @@ pub struct Enemy {
     image: StillImage,
     speed: f32,
     old_pos: Vec2,
+    firing: bool,
 
 }
 
 impl Enemy {
-    pub async fn new (x: f32, y: f32, width: f32, height: f32, image_name: &str, speed: f32) -> Enemy {
+    pub async fn new (x: f32, y: f32, width: f32, height: f32, image_name: &str, speed: f32, enable: bool) -> Enemy {
     let image = StillImage::new(image_name, width, height, x, y, true, 1.0,).await;
         Enemy{
         image,
         speed,
         old_pos: vec2(0.0, 0.0),
+        firing: enable,
     }
     }
     pub fn get_image(&self) -> &StillImage {
@@ -48,6 +50,11 @@ pub fn set_position(&mut self, x: f32, y: f32) {
     self.image.set_y(y);
 }
 
+pub fn get_enable(&mut self) -> bool {
+    self.firing
+}
+
+
 pub fn move_back_y(&mut self){
     self.image.set_y(self.old_pos.y);    
 }
@@ -64,7 +71,6 @@ pub fn clear(&mut self){
 if self.image.get_y() > 1500.0 {
      self.image.set_x(y);
      self.image.set_y(x);
-     self.image.draw();
 }
 }
 
