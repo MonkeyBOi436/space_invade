@@ -63,7 +63,6 @@ Enemy::new(550.0, 100.0, 70.0, 70.0, "assets/enemy_gr.png" ,3.0, true).await,
 Enemy::new(660.0, 100.0, 70.0, 70.0, "assets/enemy_bl.png" ,3.0, true).await,
 Enemy::new(770.0, 100.0, 70.0, 70.0, "assets/enemy_gr.png" ,3.0, true).await,
 Enemy::new(880.0, 100.0, 70.0, 70.0, "assets/enemy_bl.png" ,3.0, true).await,
-    
     ];
 
 
@@ -140,7 +139,7 @@ if enemy.get_image().get_x() <= 0.0 {
 }
 }
 
-for i in 0..enemies.len(){
+for i in (0..enemies.len()).rev(){
 if check_collision(lazer_player.get_image(), enemies[i].get_image(), 1) {
     lazer_player.lazer_hit();
     enemies.remove(i);

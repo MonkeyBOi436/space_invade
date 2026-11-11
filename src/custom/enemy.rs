@@ -39,6 +39,12 @@ pub fn move_enemy_x_right(&mut self) {
 
 }
 
+pub fn enemy_hit(&mut self) {
+    self.image.set_x(00.0);
+    self.image.set_y(00.0);
+    self.image.clear();
+}
+
 
 pub fn move_enemy_x_left(&mut self) {
     self.image.set_x(self.image.get_x() - 2.0);
@@ -49,11 +55,6 @@ pub fn set_position(&mut self, x: f32, y: f32) {
     self.image.set_x(x);
     self.image.set_y(y);
 }
-
-pub fn get_enable(&mut self) -> bool {
-    self.firing
-}
-
 
 pub fn move_back_y(&mut self){
     self.image.set_y(self.old_pos.y);    
